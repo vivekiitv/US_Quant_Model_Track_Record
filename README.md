@@ -56,6 +56,11 @@ per-year `_historical/` folders are a *disclosure* convenience, **not** per-year
 > This repository is the **sole** verification chain for the **sole** US equity long/short strategy operated
 > by Vivek ([`github.com/vivekiitv`](https://github.com/vivekiitv)). **One entry per trading day. No resets.
 > No deletions.** A terminated strategy, if ever, will be sealed here — not removed. (Stated 2026-07-11.)
+>
+> **Canonical anchor — repo ID `1297232051`** (`node_id R_kgDOTVIwsw`). GitHub repo IDs are immutable and
+> survive renames; a delete+recreate or a swapped-in repo gets a *different* ID. Identify this chain by its
+> **ID**, not its name, and verify its public history (creation, every push, any rename/delete/visibility
+> change) via **GH Archive** keyed on the repo ID. The name is cosmetic; the ID is the anchor.
 
 ## Uniqueness — honest limitations
 

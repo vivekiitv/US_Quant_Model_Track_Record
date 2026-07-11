@@ -25,6 +25,12 @@ corrections). Append-only — past entries are never edited.
 - The **daily forward chain** (alpha + ledger daily; optimizer on rebalance dates) begins the first
   trading session after `L`, each entry committed before that day's return.
 
+**Canonical anchor:** `github.com/vivekiitv/US_Quant_Model_Track_Record`, **repo ID `1297232051`**
+(`node_id R_kgDOTVIwsw`, created 2026-07-11T07:36Z). Identify by the immutable ID, not the name (see README).
+The `_historical/` bundles cover data **through L = 2026-07-09**; they were committed + OTS-stamped on
+**2026-07-11** (existence-as-of-commit — a pre-commitment, since the returns within are already known). The
+"stamped-2026-07-09" label denotes the L data cutoff, not the commit instant.
+
 **Identity / anti-cherry-pick:** sole chain on `github.com/vivekiitv`; private key backup at
 `vivekiitv/US_quant_model_KEYS`; commits SSH-signed (Verified). Reused the launch-day encrypted artifacts
 for the alpha + optimizer historical bundles (identical ciphertexts, no re-encryption); ledger historical
