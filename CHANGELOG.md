@@ -3,6 +3,49 @@
 Dated log of the strategy specification, model versions, and any operational events (missed days,
 corrections). Append-only — past entries are never edited.
 
+## 2026-07-14c — extended-history backtest published: 2001-2009 (NOT out-of-sample)
+
+Published at `backtest/r1000_long_short/_extended_2001_2009/`, **unencrypted** — a disclosure of a period
+that already happened, not a forward pre-commitment, so it must be readable without a key. The positions are
+published in full (with point-in-time tickers) so the return series can be **independently recomputed from
+public prices** rather than taken on trust.
+
+**This is NOT an out-of-sample test and we do not claim it as one.** The alpha's factor set was researched
+with visibility of the full 2000-2026 history; its design saw this decade. What *is* verifiable: the v1.0
+**spec** (constraints, risk model, composite definitions, cost model, every parameter) was sealed in the
+`2026-07-09` entry and OTS-stamped, and this backtest was run on `2026-07-14` against that frozen spec with
+nothing refit. **The configuration was not tuned to the result. The factor set may have been.**
+
+**Why publish it:** the committed record covers 2010-2026, a window with one short crisis. This decade
+contains the dot-com bust and the global financial crisis.
+
+**Result** (production configuration, unchanged): 2001-08-01 .. 2009-12-31 — **net Sharpe 1.270, 5.68%/yr,
+vol 4.47%, maxDD -5.28%**, 121 rebalances, **every year positive**, and **2008: +7.68%** (vol 6.88%,
+maxDD -5.12%). In-sample 2010-2026 for comparison: 1.656 / 7.70%.
+
+**Why the return is lower:** a substantial part of the alpha did not exist yet. Several of its constituent
+signals rely on data sources that begin only in the mid-2000s, and a further group from 2009-2010. Roughly
+**half** the alpha's inputs have usable data in 2001-2005, about **70%** in 2006-2009, against **95%** from
+2010. The 5.68%/yr was earned by approximately half the model.
+
+**And the styles it neutralises away paid enormously in that decade** — value returned **+7.29%/yr in
+2006-2009** (vs +0.97% in 2010-2026), *more than the book's entire return*. The book took none of it.
+
+**Two ways this backtest is OPTIMISTIC, stated rather than buried:**
+- **Costs.** The production cost cache starts at 2010, so it was rebuilt for 2000-2009 with the same
+  function, unmodified (rank-bucket half-spread, 21d median dollar volume, 63d sigma; past-only windows, no
+  refit). But those half-spread constants are calibrated on the modern era and **real spreads in 2001-2009
+  were materially wider**. Costs are understated by an unquantified amount.
+- **Borrow.** Charged at a flat **0.5%/yr** (the pre-2017 feed is a single constant — see `2026-07-14b`), so
+  the "real borrow <= 1%" filter excludes nothing and **every name is shortable**. Optimistic for 2008, when
+  799 financials were under a short-sale ban.
+
+**What was NOT published, and why the absence is on the record:** the same window run against a research risk
+model scored higher (Sharpe 1.507). It is not used and not published — its exposure matrix is
+**rank-deficient** (a constant market column exactly equal to the sum of the industry dummies), so its factor
+returns are unidentified. Its edge came from two years (2002, 2008) and **failed to reproduce in 2020**, the
+one crisis inside the in-sample window, where it *lost* 2.15%.
+
 ## 2026-07-14b — correction: the GC-only short filter did not bind before 2017
 
 **What the v1.0 spec claims (2026-07-09 entry):** *"SHORT book GC-only (real borrow <= 1%)."*
