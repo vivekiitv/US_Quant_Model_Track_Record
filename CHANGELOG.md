@@ -3,6 +3,29 @@
 Dated log of the strategy specification, model versions, and any operational events (missed days,
 corrections). Append-only — past entries are never edited.
 
+## 2026-07-14b — correction: the GC-only short filter did not bind before 2017
+
+**What the v1.0 spec claims (2026-07-09 entry):** *"SHORT book GC-only (real borrow <= 1%)."*
+
+**What was actually enforced:** the borrow *feed* only carries real per-name rates **from 2017**. Every
+observation from 2001 to 2016 is a **single constant, 0.004** — 728,208 observations before 2010 with
+**one distinct value**. It is the model's own `GC_FALLBACK` constant, not a vendor rate.
+
+Consequence: because no name ever reads above 1% pre-2017, the `FILTER_THRESH <= 1%` rule **excluded
+nothing**. For **2010-2016 — nine of the committed backtest's sixteen years — the short book carried no
+borrow-availability constraint at all.** From 2017 the filter binds as specified (18k-38k name-days a year
+exceed 1% and are excluded).
+
+**What is NOT affected:** the borrow *charge* was applied throughout — a flat 0.4%/yr pre-2017, real
+per-name rates after. The backtest's costs are not understated by this; the returns stand. What is
+overstated is the *constraint*: the spec describes a GC-only short book, and that was only true from 2017.
+
+**Direction of the error:** pre-2017 the book could short names that a real prime broker might have priced
+above 1% or been unable to locate. That flatters the pre-2017 short leg by an unknown amount. We publish
+the fact rather than estimate it.
+
+No artifact is revised. The chain is append-only; this entry corrects the *description*, not the data.
+
 ## 2026-07-14 — live paper launch, $250M — and the 2026-07-13 aborted run
 
 **The live book trades on QuantConnect (paper), $250,000,000, inception 2026-07-14.** QC is a third party:
