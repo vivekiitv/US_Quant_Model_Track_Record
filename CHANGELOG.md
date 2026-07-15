@@ -3,6 +3,45 @@
 Dated log of the strategy specification, model versions, and any operational events (missed days,
 corrections). Append-only — past entries are never edited.
 
+## 2026-07-15 — ticker correction: published symbols are now canonical (market) tickers
+
+**What changed.** The human-readable `ticker` column in the encrypted backtest + alpha record was
+re-serialized from the SEC-filing ticker (EDGAR `dei` TradingSymbol) to the **canonical market ticker**
+(Sharadar dated-ticker-history). The SEC ticker lags corporate renames and mislabels share classes; the
+canonical ticker is the symbol a broker or allocator actually sees. Corrected examples: `Z`→`ZG` (Zillow
+class), `IAC`→`PPLI` (IAC renamed People Inc.), `BRKA`→`BRK.B`, `BFA`→`BF.B`, `CRD-A`→`CRD.A`, plus several
+hundred renames across the alpha universe and the corresponding names in the book-of-record.
+
+**No return, weight, or position changed.** Every artifact is keyed by an internal, immutable `sec_id`; the
+ticker is a display label joined at serialization time. This correction rewrites only that label — net
+Sharpe, NAV, per-name weights, and the rebalance schedule are byte-for-byte identical. A relabeling, not a
+re-run.
+
+**Delisted names.** Where a name's canonical coverage ends at delisting, its final held sessions now carry
+its **last-known canonical ticker** (carried forward) instead of a blank — e.g. `BJS` (BJ Services, acquired
+2010) stays `BJS` on its last days. Residual blank cells fell from ~1,035 to 5 (one newly-listed name whose
+canonical coverage began after it entered the universe; the original record was blank there too).
+
+**EchoStar.** A dated-ticker-history defect had collapsed EchoStar — which renamed `SATS`→`ECHO` in June
+2026 — to `ECHO` across its entire history, colliding with Echo Global Logistics' real `ECHO` (2009-2021).
+Corrected to `SATS` through 2026-06-26 and `ECHO` from 2026-06-29.
+
+**Method (same path, versioned by content hash).** Each of the **63 affected artifacts** was re-encrypted
+(fresh AES-256-GCM key + nonce) and **overwritten at its existing path** in an SSH-signed commit; a new key
+record was appended to the (private) keystore, keyed by the new plaintext SHA-256. The superseded SEC-ticker
+ciphertexts and their keys remain in git history and stay decryptable — an open forward correction, not a
+history rewrite. New `.sha256.ots` stamps were created (Bitcoin anchoring pending, upgraded by cron).
+Independently re-verified: a fresh clone + disclosure keyfile decrypts and SHA-matches **70/70** artifacts.
+
+**Live record — immutable, not re-encrypted.** The live artifacts committed on/after 2026-07-13 are never
+modified. The `2026-07-13` live optimizer target displays the SEC tickers `Z` (Zillow; canonical `ZG`) and
+`IAC` (canonical `PPLI`) for two of its 276 names; those commitments stand as-is. The underlying positions
+were always `sec_id`-keyed and correct, and broker fills reconciled on the security, not the string. From
+this entry forward the live record's displayed tickers are canonical.
+
+**Model code.** `US_quant_model` @ `c416c10` (canonical DTH build + EchoStar override); track-record tooling
+@ `fb11428`.
+
 ## 2026-07-14c — extended-history backtest published: 2001-2009 (NOT out-of-sample)
 
 Published at `backtest/r1000_long_short/_extended_2001_2009/`, **unencrypted** — a disclosure of a period
