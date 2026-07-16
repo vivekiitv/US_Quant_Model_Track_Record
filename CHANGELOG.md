@@ -3,6 +3,22 @@
 Dated log of the strategy specification, model versions, and any operational events (missed days,
 corrections). Append-only — past entries are never edited.
 
+## 2026-07-16 — the live book-of-record is now a model-computed walk; the broker becomes an independent execution recon
+
+**What changed.** The live daily NAV (`live/r1000_long_short/ledger/`) is now computed by us — the sealed optimizer weights, marked forward on our point-in-time closing prices with the disclosed cost model (`walk.daily_step`) — rather than reconstructed from the QuantConnect brokerage account. The book-of-record is the strategy applied to public prices, not a read of a broker's ledger.
+
+**Why.** A model-computed NAV is **reproducible**: anyone holding a session's committed weights can recompute that day's return from public closing prices and the published cost model, and check it against the sealed number. It is also **continuous** — independent of broker-side operational events. During the first days of live operation (2026-07-13 through 07-15) the QuantConnect paper deployment was redeployed three times to correct a short-rebate crediting error and the borrow/subscription configuration; each redeploy reset the paper account to its starting cash. Those resets are execution-plumbing events, not strategy events, and a book-of-record read from that account would have inherited the discontinuities. The model walk does not.
+
+**What this means for the claim — stated plainly.** The load-bearing property is unchanged and is the one that matters: **each session's weights are cryptographically sealed (SHA-256 + OTS/Bitcoin + SSH-signed) before the session they apply to** — signal precedes fills. What this entry changes is how the *NAV* attached to those weights is produced. From 2026-07-16 the headline live NAV is a **model book-of-record**: our marks, our disclosed cost model (modeled transaction cost and borrow, not the broker's realized fills). It is not a statement of broker-realized P&L.
+
+**The broker is retained as a separate, date-aligned execution recon.** The QuantConnect paper deployment continues to trade the same sealed targets, and its actual equity is reported alongside the model NAV as an independent check that the strategy is executable at scale and that real fills track the model — reported as its own series, never folded into the headline number. Where they diverge (slippage, partial or missed fills, financing differences) the recon is where that shows.
+
+**One concrete example of the model-vs-execution distinction.** Building the $250M book from flat on the first session carries a modeled transaction cost of **34.7 bps** (half-spread × ~2.0× turnover, plus impact), which appears as an explicit line in the 07-14 ledger. That is the model's estimate of the build cost; the recon reports what the broker actually paid to build.
+
+**Continuity of the launch commitment.** The 2026-07-13 launch artifacts — the all-cash launch state ($250M) and the 276-name optimizer target — are immutable and unchanged. The walk is seeded from exactly that committed launch state (it re-serializes identically), builds into the launch target on 2026-07-14, and marks forward from there.
+
+**Method.** `live_ledger` for 2026-07-14 and 2026-07-15 was sealed identically to every other artifact (AES-256-GCM + plaintext SHA-256 + `.ots` + SSH-signed commit): 07-14 `5096a84`, 07-15 `71c6d54`, both independently Verified. NAV: 07-13 $250,000,000 → 07-15 $248,877,220 (−0.449% since launch). Model code `US_quant_model` @ `b68c4df`.
+
 ## 2026-07-15 — ticker correction: published symbols are now canonical (market) tickers
 
 **What changed.** The human-readable `ticker` column in the encrypted backtest + alpha record was
