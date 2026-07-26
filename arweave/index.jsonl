@@ -125,3 +125,4 @@
 {"path":"alpha/20260724/alpha.sha256","tx":"5-OmUCKUMm5RpNJ9gVByFEtnpYy-XY9T5-4T2gDave8","sha256":"a9da875d22cd0d51ecb521f7912c7a4594d40fb9656001c73ab61a15be069efd","bytes":65,"winc":"0","kind":"alpha","uploaded":"2026-07-25T11:50:12.714Z"}
 {"path":"alpha/20260724/alpha.sha256.ots","tx":"eyt8jPnNFR96cP7_iuY18R8WrpfV12dFj1vSnYbLHxg","sha256":"a9da875d22cd0d51ecb521f7912c7a4594d40fb9656001c73ab61a15be069efd","bytes":770,"winc":"0","kind":"alpha","uploaded":"2026-07-25T11:50:12.929Z"}
 {"path":"_MANIFEST","tx":"fCR74-8Coj_rcmr10kXi9gVBHqYfQf9U-F_ERzjOxek","kind":"manifest","paths":117,"uploaded":"2026-07-25T11:50:17.490Z"}
+{"path":"_MANIFEST","tx":"fCR74-8Coj_rcmr10kXi9gVBHqYfQf9U-F_ERzjOxek","kind":"manifest","paths":117,"uploaded":"2026-07-26T11:50:14.882Z"}
