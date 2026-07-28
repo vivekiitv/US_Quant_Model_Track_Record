@@ -3,6 +3,18 @@
 Dated log of the strategy specification, model versions, and any operational events (missed days,
 corrections). Append-only — past entries are never edited.
 
+## 2026-07-28 — added a blind backtest tear sheet (`tearsheet.pdf`)
+
+**What changed.** Committed `tearsheet.pdf` at the repo root — a 4-page summary of the backtest: headline
+statistics (net Sharpe 1.66, 7.9% net CAGR, −5.5% max drawdown, 2.00× gross, monthly rebalance) and
+cumulative-return / drawdown curves, 2010–2026. Added to the README.
+
+**What it does and does not disclose.** It is **blind**: aggregate performance only. No alpha signal, no
+positions, no holdings, and no per-name data appear — those remain sealed (AES-256-GCM) and disclosable
+only per-file. Every figure is derived from the already-committed book-of-record; the tear sheet asserts
+nothing that is not recomputable from a disclosed window. No change to the chain, the artifacts, or the
+verification procedure.
+
 ## 2026-07-16 — the live book-of-record is now a model-computed walk; the broker becomes an independent execution recon
 
 **What changed.** The live daily NAV (`live/r1000_long_short/ledger/`) is now computed by us — the sealed optimizer weights, marked forward on our point-in-time closing prices with the disclosed cost model (`walk.daily_step`) — rather than reconstructed from the QuantConnect brokerage account. The book-of-record is the strategy applied to public prices, not a read of a broker's ledger.

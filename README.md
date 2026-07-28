@@ -9,6 +9,20 @@ Launched **2026-07-09** (`L`). Everything under `_historical/` is a one-time pre
 the daily forward chain runs from the next session onward, each entry committed **before** that day's
 return is realized.
 
+## Performance (backtest)
+
+A blind summary tear sheet of the backtest is at [`tearsheet.pdf`](tearsheet.pdf) — aggregate statistics
+and equity/drawdown curves only; no signal, positions, or holdings are disclosed. Every figure is derived
+from the cryptographically-sealed book-of-record above. Backtest **2010–2026**, net of modelled
+transaction costs and observed borrow; all figures on **NAV (capital), not GMV**.
+
+| Ann. return (net CAGR) | Ann. vol | Net Sharpe | Max DD | Turnover (mo, 1-side) | Avg gross | Avg \|net\| | Mkt beta |
+|---|---|---|---|---|---|---|---|
+| 7.9% | 4.6% | 1.66 | −5.5% | 11.8% | 2.00× | 0.007 | +0.007 |
+
+US dollar-neutral Russell-1000 long/short, multi-factor proprietary alpha optimized against a 57-factor
+Barra-style risk model (50 industries + 7 styles), monthly rebalance, ~268 positions.
+
 ## How to verify (3 steps)
 
 Requires Python with `pip install cryptography opentimestamps-client`.
@@ -40,6 +54,7 @@ alpha/_historical/<year>/                             2000..L, one-time, histori
 backtest/r1000_long_short/ledger/YYYYMMDD/            daily book-of-record (positions, value, NAV)
 backtest/r1000_long_short/optimizer_output/YYYYMMDD/  target weights on rebalance dates
 backtest/r1000_long_short/_historical/{ledger,optimizer}/<year>/   2010..L, one-time
+tearsheet.pdf                                         blind backtest summary (aggregate stats only)
 verify.py                                             the reviewer tool above
 ```
 Each artifact folder holds `<name>.enc` (ciphertext), `<name>.sha256` (the commitment), and
