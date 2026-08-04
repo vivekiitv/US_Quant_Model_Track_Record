@@ -3,6 +3,112 @@
 Dated log of the strategy specification, model versions, and any operational events (missed days,
 corrections). Append-only — past entries are never edited.
 
+## 2026-08-04 — operational disclosure: broker command outage, redeploy, and a 19-minute flat window on 2026-08-03
+
+**What happened.** From 2026-07-24 the QuantConnect cloud stopped delivering commands to our live
+deployment. The algorithm kept running normally — scheduled events on time, data feed healthy, logging in
+real time — but nothing sent *to* it arrived. Every API call returned `success: true` and had no effect,
+and QuantConnect's own web UI could not place an order on the deployment either. There was no redeploy and
+no change on our side in that window; the last command that reached the algorithm was 2026-07-24 21:31Z,
+and the first that did not was 2026-07-27 21:30Z. The cause is on the platform side and is with
+QuantConnect support.
+
+**Consequence.** The broker account could not be traded. The scheduled monthly rebalance for trade date
+2026-08-03 could not be sent through the normal path. Restoring command delivery required a redeploy, which
+is why the live record shows a new deployment ID on 2026-08-03.
+
+**Timeline, 2026-08-03 (UTC).**
+- `18:42:21` deployment `L-080386c6…` (live since 2026-07-15) stopped. Stopping retains holdings: 275
+  positions, cash unchanged, order history intact.
+- `18:50:50` redeployed as `L-3ca9e582…`. `holdings` and `cash` are required fields when creating a
+  QuantConnect-brokerage deployment; the deployment was created without them, which QuantConnect reads as
+  an account holding nothing, so it came up FLAT. Nothing was liquidated — no orders were placed and the
+  order count never moved — the position value simply appeared as cash.
+- `19:10:26` redeployed as `L-47af23d9…`, seeding the book back from the pre-stop state. All 275 positions
+  restored with original cost basis and unrealized P&L intact.
+- `19:39–19:52` the 2026-08-03 rebalance was sent and filled: 292 orders, $59.0M notional.
+
+**The flat window.** Between `18:50:50Z` and `19:10:26Z` — **19 minutes of open market** — the broker
+account held no positions. Account equity was carried across intact ($251.7M); what was absent was position
+exposure for that interval. The strategy is dollar-neutral, so the omitted exposure was ~2.0× gross and
+approximately market-neutral, but this is a real execution-side gap and is disclosed as such.
+
+**What was preserved at the broker, and what was not.**
+
+| preserved | reset / lost |
+|---|---|
+| Holdings (once seeded), cash, cost basis, unrealized P&L | **Return / net-profit baseline** — rebased to the new deployment's starting equity |
+| Full order history (276 orders pre-rebalance, unbroken) | In-memory algorithm state |
+| — | **The broker's own equity-chart history** — see below |
+| — | Deployment ID |
+
+The **return figure shown on the QuantConnect side now reads from the 2026-08-03 redeploy, not from the
+2026-07-14 $250M inception.** Anyone reading broker-side return directly should account for that rebase.
+Our own ledger and this chain remain the authority on since-inception performance.
+
+**The broker's equity chart is deployment-scoped, and did not survive the redeploy.** Measured on
+2026-08-04: after the redeploy, QuantConnect's chart endpoint returned a **single** session (2026-07-15).
+The 18 sessions from 2026-07-16 to 2026-08-02 survive only because we hold our own copy — our recon job
+was changed on 2026-08-04 to *merge* the fetched series into stored history rather than overwrite it,
+which is the only reason that record still exists. Anyone relying on the broker-side chart for continuity
+across a redeploy should not.
+
+**2026-08-03 is a gap in the broker chart series.** It is absent from both the post-redeploy fetch and our
+stored copy. The point-in-time probe reading for that date (taken 21:31Z) may therefore be the only
+broker-side observation of it. Both broker series operate normally from 2026-08-04.
+
+**Effect on the record — stated plainly.** The headline book-of-record is unchanged in method and is
+unaffected by this event: since 2026-07-16 it is a model-computed walk of the sealed weights on our
+point-in-time closing prices with the disclosed cost model, not a read of the broker account (see the
+2026-07-16 entry). No sealed artifact was altered, re-encrypted or re-stamped; no strategy parameter
+changed; the deployed executor is byte-identical to the code running before the outage.
+
+What *is* affected is the **independent execution recon**:
+- The point-in-time probe series has **no observations from 2026-07-24 to 2026-08-03** (the probe travels
+  over the same broken channel); it resumed 2026-08-03 21:31Z.
+- The settled chart series is missing 2026-08-03, as above.
+- The 19-minute flat window means broker-realized P&L for 2026-08-03 excludes that interval, while the
+  model NAV does not.
+
+**On measuring 2026-08-03 specifically.** Because the chart series lacks that date and the probe series
+lacks 2026-07-31, no like-for-like broker return can be computed for the session. The only available
+comparison mixes the two series (07-31 settled chart → 08-03 probe) and puts the broker ~10 bp below the
+model on the day. That figure is not a measurement: the two series differ by 5–8 bp by construction, and
+the flat window is itself worth ~6.5 bp (1σ, sign random) on a book of this volatility. We therefore make
+no claim about execution quality for 2026-08-03 in either direction. Both series resume normal operation
+from 2026-08-04.
+
+**A standing clarification on the model-vs-broker level gap — this event did not cause it.** The broker
+equity series has run roughly **+0.4% above the model NAV since 2026-07-15**, and that offset is a
+**start-date artifact, not slippage and not a cost**:
+
+```
+2026-07-13  model $250,000,000   (walk begins from the committed launch state, flat)
+2026-07-14  model $249,133,313   (builds the 276-name book; 34.67 bp modeled transaction cost)
+2026-07-15  model $248,877,220   broker $250,000,000   <- broker's first session
+```
+
+The model walk is seeded from the committed 2026-07-13 launch state and had already built the book and
+absorbed its modeled build cost before the current deployment existed. The live deployment dates only from
+2026-07-15 — after the aborted 2026-07-13 run and the short-rebate/configuration redeploys described in the
+2026-07-16 entry — and its account began at exactly $250,000,000. The gap on the first overlapping session
+is therefore **$1,122,780**, which is *exactly* the model's 07-13 → 07-15 P&L on a book the broker was not
+yet holding.
+
+It should not be read as execution shortfall. The meaningful execution measure is **daily tracking**, which
+the recon puts at **+0.51 bps/day** on the settled series. For reference the level gap was **$833,720
+(+0.332%)** at the 2026-07-31 close — i.e. it has narrowed since inception, not widened.
+
+**One position differs going forward.** The rebalance target holds 286 names; the broker holds 285. `MNR`
+cannot be priced by the broker — the ticker was reused (the prior issuer delisted in 2022, a new listing
+took the symbol in 2023-10), so it resolves to a security with no market data and no order can be placed.
+Target weight is 0.0012 (12 bp). The model book-of-record holds it; the broker does not. This is a known,
+bounded divergence and will persist until the ticker resolves or the name leaves the book.
+
+**Method / provenance.** No change to sealing, verification, or the publication procedure. Deployment IDs
+for audit: `L-080386c6628e9d1ab20ce6d5ef755d88` (2026-07-15 → 2026-08-03), `L-3ca9e5823ee8e6e80654924ffcda8ec4`
+(18:50–19:09Z, flat), `L-47af23d9cdb1572a1a348d5acf157291` (2026-08-03 →).
+
 ## 2026-07-28 — added a blind backtest tear sheet (`tearsheet.pdf`)
 
 **What changed.** Committed `tearsheet.pdf` at the repo root — a 4-page summary of the backtest: headline
