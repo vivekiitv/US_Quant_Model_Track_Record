@@ -3,6 +3,83 @@
 Dated log of the strategy specification, model versions, and any operational events (missed days,
 corrections). Append-only — past entries are never edited.
 
+## 2026-08-12 — correction to the 2026-08-04 entry: the broker chart history was not lost
+
+**This entry corrects the 2026-08-04 disclosure. That entry stands as written — this log is append-only —
+but three of its statements about the broker's equity chart are wrong, and the error was ours.**
+
+The 2026-08-04 entry said the broker's equity chart was deployment-scoped and "did not survive the
+redeploy"; that QuantConnect's chart endpoint returned a **single** session after it; and that 2026-08-03
+was consequently a permanent gap in that series, for which "no like-for-like broker return can be
+computed". None of that is true. The full history is present at QuantConnect. Our request was malformed.
+
+**The cause.** Our chart fetch called `live/chart/read` with `start: 0, end: 0` — a degenerate time
+window. QuantConnect answers that with `success: true` and one data point, rather than an error or an
+empty result. A one-session series is indistinguishable from a newly-created deployment, so nothing
+downstream registered a fault. Fixed 2026-08-12 (`US_quant_model` @ `8aa1cd1`): a real bounded window at
+full resolution. Two properties of that endpoint were also misunderstood — `count` is a *resolution*
+control, not a row limit (QuantConnect buckets the requested window into approximately `count` samples, so
+a wider window at fixed `count` returns coarser data, not more of it), and omitting `count` returns
+`success: false`.
+
+**What is actually there.** Measured 2026-08-12 against live project `34165977`, whose current deployment
+`L-47af23d9…` was created 2026-08-03 19:10:26Z:
+
+- **29 sessions, 2026-07-15 through 2026-08-12**, including the pre-redeploy period 07-15..08-02. The
+  series therefore spans the deployment boundary; it is not deployment-scoped in the way we described.
+- **2026-08-03 is present**, not missing: 5,314 intraday samples over 17:00–21:00Z and a settled close of
+  **$251,483,439**.
+
+**The 19-minute flat window is visible in the broker's own data, and it corroborates our timeline to the
+second.** This is the strongest verification we have of the 2026-08-03 event, and we did not have it when
+we wrote that entry:
+
+```
+18:42:22Z -> 18:51:00Z   no samples for 518s              deployment stopped 18:42:21Z
+18:51:00Z -> 19:09:49Z   416 consecutive samples,
+                         equity EXACTLY $251,712,789      the flat deployment, 18m49s
+                         ONE distinct value               no positions, so equity cannot move
+19:09:49Z -> 19:10:38Z   no samples for 49s               book reseeded 19:10:26Z
+```
+
+The control is the sampling density either side: **one** distinct equity value across those 19 minutes,
+against **20** distinct values in the preceding 12 minutes and **30** in the following 20. The equity was
+pinned, not thinly sampled. A second, independent series agrees — the Exposure chart records both Long
+Ratio and Short Ratio at **zero** at 19:09:50Z. The two sampling gaps fall precisely on the two redeploy
+instants, and the pinned span sits inside the disclosed 18:50:50–19:10:26Z window.
+
+**Effect on the record.**
+
+| | 2026-08-04 entry | corrected |
+|---|---|---|
+| Broker chart sessions held | 19 (07-15..08-02), described as surviving only in our copy | 28 (07-15..08-11), retrievable from QuantConnect |
+| 2026-08-03 in the chart | absent, permanent gap | present, settled close $251,483,439 |
+| Broker return for 2026-08-03 | "no like-for-like comparison can be computed" | computable: chart-to-chart, model −0.199% vs broker −0.209%, tracking error **+0.9 bp** |
+| Settled-chart cumulative since $250M deploy | +0.80% (frozen at 07-31) | **+1.39%** (2026-08-11), against model +1.06% |
+| Settled-chart tracking error | n=12, mean +0.68 bp/day, 95% CI [−0.5, +1.9] | n=19, mean **+0.31 bp/day**, 95% CI [−1.1, +1.7] |
+
+**The 2026-08-03 figure is now computable but is still not a clean execution measurement.** The +0.9 bp
+tracking error above spans 07-31 to 08-03 and therefore contains the flat window, during which the broker
+held no exposure while the model did. As stated on 2026-08-04, that window is worth roughly 6.5 bp (1σ,
+sign random) on a book of this volatility. We therefore correct the claim that the day cannot be measured,
+without upgrading it to a claim about execution quality on that day.
+
+**The previously-stored sessions are unchanged.** Refetching at full resolution reproduced 18 of the 19
+stored sessions to 0.000 bp. The one exception is 2026-07-15, the launch session, which moves by 2.1 bp
+($249,906,278 → $249,853,189) because the deployment began 17:27 that day and the day's final sample moves
+with sampling resolution. It is immaterial and is noted only for completeness.
+
+**Unaffected.** The headline book-of-record is a model-computed walk of the sealed weights on our
+point-in-time closing prices, not a read of the broker account (see the 2026-07-16 entry), and nothing here
+touches it. No sealed artifact was altered, re-encrypted or re-stamped; no strategy parameter changed; the
+deployed executor is unchanged. The 2026-07-24 to 2026-08-03 command outage, the redeploy, and the flat
+window all stand exactly as disclosed — this entry strengthens the evidence for them rather than revising
+them.
+
+**What we changed so this does not recur.** The chart fetch now logs a warning when a response is
+implausibly sparse, so a truncated series can no longer pass as a young one. Separately, a daily check
+(`check_qc_channel.sh`) now alerts when either broker series stops advancing against the trading calendar;
+under it, this fault would have surfaced within two sessions rather than nine days.
 ## 2026-08-04 — operational disclosure: broker command outage, redeploy, and a 19-minute flat window on 2026-08-03
 
 **What happened.** From 2026-07-24 the QuantConnect cloud stopped delivering commands to our live
