@@ -3,6 +3,36 @@
 Dated log of the strategy specification, model versions, and any operational events (missed days,
 corrections). Append-only — past entries are never edited.
 
+## 2026-08-20 — correction: a pricing-path return bound zeroed a genuine +177% move on 2026-08-19; books restated
+
+**What happened.** On 2026-08-19 Moderna (MRNA), held short in both books, returned **+176.97%**
+($62.96 → $174.38). The portfolio pricing path (`walk.py`) loaded returns with a legacy data-clean
+bound of [−90%, +100%] that NULLS any value outside it (a bad-print guard), and then zero-filled the
+null — so both books booked **zero P&L** on the position that day. The market data itself was correct
+and uncorrected (a genuine move); the factor/alpha/risk layers use wider bounds ([−90%, +200%],
+winsorized) and priced the move correctly. In 16.5 years of history this bound was hit by a held
+name exactly once: this day.
+
+**Impact (2026-08-19 only).** Live book: missed −1.52% of NAV (published net return −0.13% vs true
+−1.67%; NAV $253.5M vs true $249.7M). Backtest book: missed −0.52% (published −0.15% vs true −0.70%;
+NAV $175.3M vs true $174.0M). The error was caught on 2026-08-20 via the daily broker reconciliation
+(model NAV vs broker equity diverged by ~1.5%; the gap after correction is −0.24%, normal daily
+territory).
+
+**Fix.** Pricing bounds widened to [−90%, +500%] and changed from null-and-zero-fill to winsorize
+(a genuine move beyond the bound books at the bound instead of vanishing). Model code fixed in
+`US_quant_model` (`prod/portfolio/walk.py`, `prod/portfolio/_snapshots.py`).
+
+**Restatement.** Both book-of-record stores were rolled back for 2026-08-19 and re-walked under the
+corrected pricing (a pure drift day — no optimizer target was involved). Corrected 2026-08-19 values:
+live net return **−1.67%**, NAV **$249,671,650**; backtest net return **−0.70%**, NAV **$174,045,591**.
+
+**Chain integrity note.** The 2026-08-19 artifacts sealed on 2026-08-20 ~10:00Z (commits `b4b72b6`
+live_ledger, `65f558f` ledger) contain the PRE-correction ledgers and are left untouched — per this
+chain's doctrine, corrections are disclosed forward, never rewritten. From 2026-08-20 onward the daily
+chain continues from the corrected stores; the 08-19 → 08-20 discontinuity in the sealed series is
+exactly the restatement described here.
+
 ## 2026-08-12 — correction to the 2026-08-04 entry: the broker chart history was not lost
 
 **This entry corrects the 2026-08-04 disclosure. That entry stands as written — this log is append-only —
