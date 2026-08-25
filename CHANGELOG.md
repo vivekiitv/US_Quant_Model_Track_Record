@@ -3,6 +3,8 @@
 Dated log of the strategy specification, model versions, and any operational events (missed days,
 corrections). Append-only — past entries are never edited.
 
+## 2026-08-25 — note: a vendor-ingest watermark bug dropped cash dividends from our price data 2026-08-14..08-24; the data layer was corrected (dividend-inclusive returns restored, point-in-time stamped), and the sealed ledgers are NOT restated — the net book impact was +3.1bp of NAV over the 7 sessions (longs missed dividend income +6.4bp, shorts avoided paying −3.3bp), within ordinary daily noise.
+
 ## 2026-08-20 — correction: a pricing-path return bound zeroed a genuine +177% move on 2026-08-19; books restated
 
 **What happened.** On 2026-08-19 Moderna (MRNA), held short in both books, returned **+176.97%**
