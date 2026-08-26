@@ -222,3 +222,4 @@
 {"path":"alpha/20260824/alpha.sha256","tx":"0KXn1m-BR7r_P2kvWwQXYNUxfR4T8B7tfBcUID-95HE","sha256":"8b1d50827f115602e94f70207893e80d3ba62ba86a6db455c704acdc0d9a18bd","bytes":65,"winc":"0","kind":"alpha","uploaded":"2026-08-25T11:50:05.066Z"}
 {"path":"alpha/20260824/alpha.sha256.ots","tx":"54ODMu4rzFQ_eLdMIZLZimK8EOrvRT5elBqjOiQ4OJc","sha256":"8b1d50827f115602e94f70207893e80d3ba62ba86a6db455c704acdc0d9a18bd","bytes":910,"winc":"0","kind":"alpha","uploaded":"2026-08-25T11:50:05.279Z"}
 {"path":"_MANIFEST","tx":"kJtIsSXcs8oUN5zwQcfbwSgZywiwrvrTgG7sON7fuqY","kind":"manifest","paths":183,"uploaded":"2026-08-25T11:50:08.886Z"}
+{"path":"_MANIFEST","tx":"kJtIsSXcs8oUN5zwQcfbwSgZywiwrvrTgG7sON7fuqY","kind":"manifest","paths":183,"uploaded":"2026-08-26T11:50:15.222Z"}
