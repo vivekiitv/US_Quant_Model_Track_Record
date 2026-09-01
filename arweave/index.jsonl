@@ -240,3 +240,10 @@
 {"path":"_MANIFEST","tx":"rHYGmm8zTfWJPfwTLsaXzC-yiML_txidcgKa-UlrcB0","kind":"manifest","paths":195,"uploaded":"2026-08-29T11:50:17.140Z"}
 {"path":"_MANIFEST","tx":"rHYGmm8zTfWJPfwTLsaXzC-yiML_txidcgKa-UlrcB0","kind":"manifest","paths":195,"uploaded":"2026-08-30T11:50:14.616Z"}
 {"path":"_MANIFEST","tx":"rHYGmm8zTfWJPfwTLsaXzC-yiML_txidcgKa-UlrcB0","kind":"manifest","paths":195,"uploaded":"2026-08-31T11:50:14.419Z"}
+{"path":"alpha/20260831/alpha.enc","tx":"7SxXVMmP2ng06MvPosSP8KeoHsK17Oa0dvvKV6tWGX0","sha256":"f2ba255892bd694c218bcf4bd05f322be34381bc95a178e01500d1e9fb7c405f","bytes":83265,"winc":"0","kind":"alpha","uploaded":"2026-09-01T11:50:11.386Z"}
+{"path":"alpha/20260831/alpha.sha256","tx":"sbzpoHeGsJJkFy5DXd0YlyhD6JEvMBWjV58RG53d5zA","sha256":"f2ba255892bd694c218bcf4bd05f322be34381bc95a178e01500d1e9fb7c405f","bytes":65,"winc":"0","kind":"alpha","uploaded":"2026-09-01T11:50:11.680Z"}
+{"path":"alpha/20260831/alpha.sha256.ots","tx":"3vf2AJyB1kRQYk19SQwn466EAyXkhA_QJlQWyFk3U2g","sha256":"f2ba255892bd694c218bcf4bd05f322be34381bc95a178e01500d1e9fb7c405f","bytes":875,"winc":"0","kind":"alpha","uploaded":"2026-09-01T11:50:11.880Z"}
+{"path":"live/r1000_long_short/optimizer_output/20260901/optimizer.enc","tx":"81oCQmlTovyHhJcnmQnNVt79xkA3YPWvBfYvI_qq8rE","sha256":"4ccd5b67ce9bc40b9e8e9f858581ef536477c8fb9c875093ecd23ce746ae2869","bytes":8583,"winc":"0","kind":"live","uploaded":"2026-09-01T11:50:13.925Z"}
+{"path":"live/r1000_long_short/optimizer_output/20260901/optimizer.sha256","tx":"I9Ccrbex7lr0ghvwx-0V0hCLp007nPGozfSGN8WKA6s","sha256":"4ccd5b67ce9bc40b9e8e9f858581ef536477c8fb9c875093ecd23ce746ae2869","bytes":65,"winc":"0","kind":"live","uploaded":"2026-09-01T11:50:14.148Z"}
+{"path":"live/r1000_long_short/optimizer_output/20260901/optimizer.sha256.ots","tx":"iqoRDpSNyH28NZfXCknYyr5cofJX4GT5MVluXGJ048o","sha256":"4ccd5b67ce9bc40b9e8e9f858581ef536477c8fb9c875093ecd23ce746ae2869","bytes":735,"winc":"0","kind":"live","uploaded":"2026-09-01T11:50:14.341Z"}
+{"path":"_MANIFEST","tx":"gUN2Fa--qFy_r-tJAwjrsH13ceeJ9p5gttblAR8EUeI","kind":"manifest","paths":201,"uploaded":"2026-09-01T11:50:16.493Z"}
