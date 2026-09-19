@@ -297,3 +297,10 @@
 {"path":"alpha/20260916/alpha.sha256.ots","tx":"Q_cGwYsh2tPdgZfrDO6HxckHXwvFKRRrnuym12LDu3o","sha256":"b96a77aa86e987511d711354db18dabcb22808f82c741176dd5ffb6c62d540c6","bytes":840,"winc":"0","kind":"alpha","uploaded":"2026-09-17T11:50:04.750Z"}
 {"path":"_MANIFEST","tx":"K-umQIGe79Mi99tAuzYShQy5qquWAV4XBxwxq2w9NDU","kind":"manifest","paths":234,"uploaded":"2026-09-17T11:50:08.510Z"}
 {"path":"_MANIFEST","tx":"K-umQIGe79Mi99tAuzYShQy5qquWAV4XBxwxq2w9NDU","kind":"manifest","paths":234,"uploaded":"2026-09-18T11:50:09.039Z"}
+{"path":"alpha/20260917/alpha.enc","tx":"6GKcNS6wCqspx-LULzrcZS2lJqtTak8cUxESV91IAp8","sha256":"40a1240c08032cdbccec2664fe655d8a39678cc34f4a567ce1d6c50359a587d8","bytes":83137,"winc":"0","kind":"alpha","uploaded":"2026-09-19T11:50:04.246Z"}
+{"path":"alpha/20260917/alpha.sha256","tx":"ssCy4k7SjMCF8c8S5wPfSIk7aZL4ktPaSrMnFjP5lHA","sha256":"40a1240c08032cdbccec2664fe655d8a39678cc34f4a567ce1d6c50359a587d8","bytes":65,"winc":"0","kind":"alpha","uploaded":"2026-09-19T11:50:04.484Z"}
+{"path":"alpha/20260917/alpha.sha256.ots","tx":"OsLpkl-65Vk_950tSbc0zjNvK5Im8_rqci1btGQoNsY","sha256":"40a1240c08032cdbccec2664fe655d8a39678cc34f4a567ce1d6c50359a587d8","bytes":805,"winc":"0","kind":"alpha","uploaded":"2026-09-19T11:50:04.690Z"}
+{"path":"alpha/20260918/alpha.enc","tx":"cuk5PQ7Ama0kE2ijIoVQ8S7icwhs7X6Y-HLD8bVFAlo","sha256":"ef279a6ea2a2ad7c6b0dab1376c9ccfa888339188d763d20c931e3ad6ab5689d","bytes":82894,"winc":"0","kind":"alpha","uploaded":"2026-09-19T11:50:04.901Z"}
+{"path":"alpha/20260918/alpha.sha256","tx":"u2J3qzYSnJrVOSUFTAjJ2lKKybOzcS2Pk2a3dTqERZE","sha256":"ef279a6ea2a2ad7c6b0dab1376c9ccfa888339188d763d20c931e3ad6ab5689d","bytes":65,"winc":"0","kind":"alpha","uploaded":"2026-09-19T11:50:05.100Z"}
+{"path":"alpha/20260918/alpha.sha256.ots","tx":"1OCeKpsuFiS1Ja4eKZN0ZMx66LFsW77WOZTzvz6EHxs","sha256":"ef279a6ea2a2ad7c6b0dab1376c9ccfa888339188d763d20c931e3ad6ab5689d","bytes":875,"winc":"0","kind":"alpha","uploaded":"2026-09-19T11:50:05.308Z"}
+{"path":"_MANIFEST","tx":"Ws2qD10bLifM-LfSuvzJU5K-3vXSRu7PWPPXgOG9rNE","kind":"manifest","paths":240,"uploaded":"2026-09-19T11:50:09.169Z"}
