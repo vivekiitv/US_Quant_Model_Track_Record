@@ -373,3 +373,4 @@
 {"path":"alpha/20261009/alpha.sha256","tx":"gqOaFsiGnhA31PpKPL7X7dky7hPxmyE6_WPRkP0NdPM","sha256":"9ef4ec60cdfd05f38b5c6b1087edaca22c0393a42d3b7d0dc0087425f7856a48","bytes":65,"winc":"10049325","kind":"alpha","uploaded":"2026-10-10T11:50:04.718Z"}
 {"path":"alpha/20261009/alpha.sha256.ots","tx":"nKcsph-yeomaHrnOsUWsNJO3ZJKcBbgbJPuYFnOQV7U","sha256":"9ef4ec60cdfd05f38b5c6b1087edaca22c0393a42d3b7d0dc0087425f7856a48","bytes":805,"winc":"19847234","kind":"alpha","uploaded":"2026-10-10T11:50:04.920Z"}
 {"path":"_MANIFEST","tx":"T6orlMR1wA2A1u-iEOYf0ZN8lbgqoITTWIBdbrFaIiA","kind":"manifest","paths":288,"uploaded":"2026-10-10T11:50:08.631Z"}
+{"path":"_MANIFEST","tx":"T6orlMR1wA2A1u-iEOYf0ZN8lbgqoITTWIBdbrFaIiA","kind":"manifest","paths":288,"uploaded":"2026-10-11T11:50:07.306Z"}
