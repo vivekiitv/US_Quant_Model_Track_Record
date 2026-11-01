@@ -442,3 +442,4 @@
 {"path":"live/r1000_long_short/optimizer_output/20261102/optimizer.sha256","tx":"LDnefBXMxYNnlLqol22XEwgTj8wZ4mMDsUowzY-n4Y0","sha256":"c85428d78598a844ba72f09d4bd3940e738a970ff89f02ce5020d4e30e8f0256","bytes":65,"winc":"12631924","kind":"live","uploaded":"2026-10-31T11:50:19.838Z"}
 {"path":"live/r1000_long_short/optimizer_output/20261102/optimizer.sha256.ots","tx":"h8Pq_LcRQHuXjt_sYfnKPzwGV57f6qJ-Ld6W3BGwS40","sha256":"c85428d78598a844ba72f09d4bd3940e738a970ff89f02ce5020d4e30e8f0256","bytes":875,"winc":"24637048","kind":"live","uploaded":"2026-10-31T11:50:20.047Z"}
 {"path":"_MANIFEST","tx":"ySBfEaKy_-clLgDzxBdGKmAMP8KQN4fjzdEQiUcABFs","kind":"manifest","paths":336,"uploaded":"2026-10-31T11:50:22.480Z"}
+{"path":"_MANIFEST","tx":"ySBfEaKy_-clLgDzxBdGKmAMP8KQN4fjzdEQiUcABFs","kind":"manifest","paths":336,"uploaded":"2026-11-01T11:50:12.599Z"}
