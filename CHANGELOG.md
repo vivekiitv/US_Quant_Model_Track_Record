@@ -3,6 +3,50 @@
 Dated log of the strategy specification, model versions, and any operational events (missed days,
 corrections). Append-only — past entries are never edited.
 
+## 2026-11-02 — notice, published intra-session: today's committed optimizer target will NOT be traded; mandate correction (index membership) + model update; October rebalance deferred one session
+
+**The superseded targets.** These were committed on 2026-10-31 for trade date 2026-11-02, solved on the
+2026-10-30 alpha and the uncorrected universe panel described below:
+
+- `live/r1000_long_short/optimizer_output/20261102/`
+- `backtest/r1000_long_short/optimizer_output/20261102/`
+
+**They are not being traded.** Both books are holding their 2026-10-30 positions through the 2026-11-02
+session. The artifacts remain in the repository exactly as committed — nothing is rewritten or withdrawn.
+
+**Timing, stated explicitly so it cannot be read as an ex-post decision.** The target was removed from the
+books' pending state at **2026-11-02T02:14Z**, twelve hours before the 14:30Z open, and the revised rebalance
+schedule was recorded at 03:52Z. This notice is published **before the 21:00Z close at which that target would
+have been achieved**: the decision concerns a fill that has not occurred and will not occur. No part of it was
+informed by the 2026-11-02 session's price action.
+
+**Why.** Two changes take effect with the 2026-11-02 signal, and we chose to defer one session rather than
+execute a target built on inputs we had already decided to replace:
+
+1. **Universe correction.** The Russell-1000 membership panel used since inception carried a data defect:
+   delisted symbols whose tickers were later reused by other issuers retained open membership intervals, so
+   the panel admitted names that were no longer index members — 101 of 1,081 on 2026-10-30 (≈3 % of live
+   gross). The panel is now built from corrected intervals. Because the model's edge in names below the index
+   floor is real and documented, the stated universe becomes **the corrected Russell 1000, plus at most 5 % of
+   NAV per side in names from the top-2,500 by market capitalisation outside it**.
+2. **Model update.** A new alpha component derived from SEC Form N-PORT fund holdings joined the
+   `alternatives` composite at equal weight, effective the 2026-11-02 alpha. No historical alpha is restated.
+
+**What happens next (intent, not yet fact).** The replacement target is to be solved on the 2026-11-02 alpha
+under the corrected mandate, committed before the 2026-11-03 open as `optimizer_output/20261103`, and traded at
+that session's close. `ledger/20261102`, sealed on the normal daily cycle, will show no trades and is the
+authoritative holdings record for this session. Signal-precedes-fills continues to hold for every executed
+target; a published target that is not executed can only subtract from the record, never flatter it.
+
+**Backtest disclosure (not restated).** The published 2010–2026 backtest ran on the uncorrected panel. Re-run
+with identical code and configuration: full period net Sharpe 1.595 → **1.451** strict-corrected and **1.562**
+with the 5 % sleeve now adopted (annualised net 7.50 % → 6.70 % / 7.38 %); since 2020, 1.503 → 1.474 /
+**1.719** (8.81 % → 8.53 % / 10.44 %). The paired full-period difference is −0.80 %/yr ± 0.46 (t ≈ 1.8),
+within roughly one standard error. Historical artifacts stay as committed; the forward chain continues under
+the new mandate.
+
+**Model code:** `US_quant_model` @ `5250a25`.
+
 ## 2026-08-25 — note: a vendor-ingest watermark bug dropped cash dividends from our price data 2026-08-14..08-24; the data layer was corrected (dividend-inclusive returns restored, point-in-time stamped), and the sealed ledgers are NOT restated — the net book impact was +3.1bp of NAV over the 7 sessions (longs missed dividend income +6.4bp, shorts avoided paying −3.3bp), within ordinary daily noise.
 
 ## 2026-08-20 — correction: a pricing-path return bound zeroed a genuine +177% move on 2026-08-19; books restated
