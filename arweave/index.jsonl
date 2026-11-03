@@ -444,3 +444,10 @@
 {"path":"_MANIFEST","tx":"ySBfEaKy_-clLgDzxBdGKmAMP8KQN4fjzdEQiUcABFs","kind":"manifest","paths":336,"uploaded":"2026-10-31T11:50:22.480Z"}
 {"path":"_MANIFEST","tx":"ySBfEaKy_-clLgDzxBdGKmAMP8KQN4fjzdEQiUcABFs","kind":"manifest","paths":336,"uploaded":"2026-11-01T11:50:12.599Z"}
 {"path":"_MANIFEST","tx":"ySBfEaKy_-clLgDzxBdGKmAMP8KQN4fjzdEQiUcABFs","kind":"manifest","paths":336,"uploaded":"2026-11-02T11:50:07.653Z"}
+{"path":"alpha/20261102/alpha.enc","tx":"c7jLhMd4xGPd_U9Rrr5Xo-nltErzJGQRm5rBZauDIS4","sha256":"3ac764ec89c366c2909287d014f29767fbedb3f57dcdfae2deb5a2c26ba512b6","bytes":82323,"winc":"1201816201","kind":"alpha","uploaded":"2026-11-03T11:50:04.664Z"}
+{"path":"alpha/20261102/alpha.sha256","tx":"KXoz_IVrX4RlNYm5MsLV6koE8q8y1dGxW3_hs5eH2vY","sha256":"3ac764ec89c366c2909287d014f29767fbedb3f57dcdfae2deb5a2c26ba512b6","bytes":65,"winc":"12182136","kind":"alpha","uploaded":"2026-11-03T11:50:04.925Z"}
+{"path":"alpha/20261102/alpha.sha256.ots","tx":"GrtqwGLHcHAeDyVZ9gq3MA4lV1i_qawjTXiiK0NTbAc","sha256":"3ac764ec89c366c2909287d014f29767fbedb3f57dcdfae2deb5a2c26ba512b6","bytes":840,"winc":"23648898","kind":"alpha","uploaded":"2026-11-03T11:50:05.140Z"}
+{"path":"live/r1000_long_short/optimizer_output/20261103/optimizer.enc","tx":"Fnn0KA4bOZvn4yYwL4bP1umlLBV2auUOv-zVc61xJUU","sha256":"8c0e21b6ee12ca89c5399409e445372c0a4c0832763ebbfd4f3eaafc1148e96f","bytes":8443,"winc":"134033624","kind":"live","uploaded":"2026-11-03T11:50:07.256Z"}
+{"path":"live/r1000_long_short/optimizer_output/20261103/optimizer.sha256","tx":"MXtQ3s9Rfte-EeGCEGexbLAk4idUGnfrNQQ6E6NXXvw","sha256":"8c0e21b6ee12ca89c5399409e445372c0a4c0832763ebbfd4f3eaafc1148e96f","bytes":65,"winc":"12743333","kind":"live","uploaded":"2026-11-03T11:50:07.493Z"}
+{"path":"live/r1000_long_short/optimizer_output/20261103/optimizer.sha256.ots","tx":"c0g8rrUC0oF7U-eWt8jK7Y7F0NGpWpagUp85aJFhnIY","sha256":"8c0e21b6ee12ca89c5399409e445372c0a4c0832763ebbfd4f3eaafc1148e96f","bytes":875,"winc":"24690016","kind":"live","uploaded":"2026-11-03T11:50:07.724Z"}
+{"path":"_MANIFEST","tx":"FnkX6iTFnBpbXYcWDkkMSUt0OkCOKxnGFP-z7e5A2JI","kind":"manifest","paths":342,"uploaded":"2026-11-03T11:50:09.932Z"}
