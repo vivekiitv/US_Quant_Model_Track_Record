@@ -490,3 +490,4 @@
 {"path":"alpha/20261113/alpha.sha256.ots","tx":"MdZoNwvk6PF_vAEOlZkpWZD5NHOvHfJ7PijyxqJziuE","sha256":"5893426bb41da0d23694d6c1624a75b03cbe0b9c2e56acfa77ad8dc920186e14","bytes":770,"winc":"22731300","kind":"alpha","uploaded":"2026-11-14T11:50:09.503Z"}
 {"path":"_MANIFEST","tx":"wiWJRJO_UV-CI6s_8hOEKiK6HTx8EShEhfF3MG1kQxQ","kind":"manifest","paths":369,"uploaded":"2026-11-14T11:50:13.266Z"}
 {"path":"_MANIFEST","tx":"wiWJRJO_UV-CI6s_8hOEKiK6HTx8EShEhfF3MG1kQxQ","kind":"manifest","paths":369,"uploaded":"2026-11-15T11:50:55.388Z"}
+{"path":"_MANIFEST","tx":"wiWJRJO_UV-CI6s_8hOEKiK6HTx8EShEhfF3MG1kQxQ","kind":"manifest","paths":369,"uploaded":"2026-11-16T11:50:21.502Z"}
