@@ -511,3 +511,4 @@
 {"path":"alpha/20261120/alpha.sha256","tx":"DAGKjzz6UTp4H6YMRqaMkZ6y00q1fjR5Wbl02GV6_b4","sha256":"00b8f365c5c88f9c35f0f46b9dcf2c850be6b6adc8ca222cdd05ef8f88559863","bytes":65,"winc":"14407224","kind":"alpha","uploaded":"2026-11-21T11:50:04.741Z"}
 {"path":"alpha/20261120/alpha.sha256.ots","tx":"1Ek1O_yXz7fGrU09HQEC2HEvgvYe2mk1Bd2f-QZ_ba4","sha256":"00b8f365c5c88f9c35f0f46b9dcf2c850be6b6adc8ca222cdd05ef8f88559863","bytes":770,"winc":"23648934","kind":"alpha","uploaded":"2026-11-21T11:50:04.960Z"}
 {"path":"_MANIFEST","tx":"LkXmgWO46237YnztvjauzCoeWRhhF7ppg_Me1m87HGE","kind":"manifest","paths":384,"uploaded":"2026-11-21T11:50:08.624Z"}
+{"path":"_MANIFEST","tx":"LkXmgWO46237YnztvjauzCoeWRhhF7ppg_Me1m87HGE","kind":"manifest","paths":384,"uploaded":"2026-11-22T11:50:09.012Z"}
